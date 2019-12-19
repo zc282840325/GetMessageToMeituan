@@ -119,6 +119,7 @@ namespace GetMessageToMeituan
 
         }
 
+        #region 获取UUID
         public static async Task<String> getcookie(string url)
         {
             try
@@ -149,6 +150,9 @@ namespace GetMessageToMeituan
             return result_cookie;
         }
 
+        #endregion
+
+        #region 时间戳转为C#格式时间        
         /// <summary>        
         /// 时间戳转为C#格式时间        
         /// </summary>        
@@ -161,41 +165,10 @@ namespace GetMessageToMeituan
             TimeSpan toNow = new TimeSpan(lTime);
             return dtStart.Add(toNow);
         }
-
-        public static string path = System.AppDomain.CurrentDomain.BaseDirectory;
-        [DllImport("haha.dll")]
-        static extern void QQRichEdit(string str, int i);
-        [DllImport("haha.dll")]
-        static extern int load();
-        private HslCommunication.BasicFramework.SoftAuthorize softAuthorize = null;
-        private string AuthorizeEncrypted(string arg)
-        {
-            return HslCommunication.BasicFramework.SoftSecurity.MD5Encrypt(arg, "4rfv%TGB");
-        }
-
+        #endregion
         private void Form1_Load(object sender, EventArgs e)
         {
-            softAuthorize = new HslCommunication.BasicFramework.SoftAuthorize();
-            softAuthorize.FileSavePath = path + "\\Authorize.data"; // 设置存储激活码的文件，该存储是加密的
-            softAuthorize.LoadByFile();
-
-            // 检测激活码是否正确，没有文件，或激活码错误都算作激活失败
-            if (!softAuthorize.IsAuthorizeSuccess(AuthorizeEncrypted))
-            {
-                // 显示注册窗口
-                using (HslCommunication.BasicFramework.FormAuthorize form =
-                    new HslCommunication.BasicFramework.FormAuthorize(
-                        softAuthorize,
-                        "请加QQ1748434806",
-                        AuthorizeEncrypted))
-                {
-                    if (form.ShowDialog() != DialogResult.OK)
-                    {
-                        // 授权失败，退出
-                        Close();
-                    }
-                }
-            }
+       
         }
 
         private void Button2_Click(object sender, EventArgs e)
@@ -216,6 +189,8 @@ namespace GetMessageToMeituan
                 }
             }
             }
+
+        #region 导出数据到Excel
 
         /// <summary>
         /// 导出数据到Excel
@@ -352,6 +327,7 @@ namespace GetMessageToMeituan
             }
             return cellStyle;
         }
+        #endregion
 
         private static DateTime _dtStart = new DateTime(1970, 1, 1, 8, 0, 0);
 
